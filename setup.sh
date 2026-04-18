@@ -2,8 +2,16 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-PACKAGES_DIR="$(cd "${SCRIPT_DIR}/../zenbu/packages" && pwd)"
-REGISTRY_DIR="$(cd "${SCRIPT_DIR}/../.." && pwd)/registry"
+ZENBU_HOME="${ZENBU_HOME:-$HOME/.zenbu}"
+PACKAGES_DIR="${ZENBU_HOME}/plugins/zenbu/packages"
+REGISTRY_DIR="${ZENBU_HOME}/registry"
+
+for dir in "${PACKAGES_DIR}" "${REGISTRY_DIR}"; do
+  if [ ! -d "${dir}" ]; then
+    echo "ERROR: missing ${dir}. Set ZENBU_HOME if your Zenbu lives elsewhere." >&2
+    exit 1
+  fi
+done
 
 cat > "${SCRIPT_DIR}/tsconfig.local.json" <<EOF
 {
