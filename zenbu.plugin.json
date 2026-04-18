@@ -1,0 +1,6 @@
+{
+  "name": "left-sidebar",
+  "services": [
+    "src/services/*.ts"
+  ]
+}
